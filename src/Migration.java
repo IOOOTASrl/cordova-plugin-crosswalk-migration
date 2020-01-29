@@ -57,6 +57,15 @@ public class Migration extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         Log.d(TAG, "initialize()");
+        
+        // Crosswalk sanity check
+        try {
+          Class.forName("org.crosswalk.engine.XWalkCordovaView");
+          Log.d(TAG, "initialize::crosswalk_enabled");
+        } catch (ClassNotFoundException e) {
+          Log.d(TAG, "initialize::crosswalk_not_found");
+          return;
+        }
 
         if(!hasRun){
             hasRun = true;
