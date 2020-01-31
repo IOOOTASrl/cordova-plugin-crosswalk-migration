@@ -1,5 +1,5 @@
 {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "name": "@salesfusion/cordova-plugin-crosswalk-migration",
     "cordova_name": "Crosswalk Data Migration Plugin",
     "description": "Cordova/Phonegap plugin for Android to preserve persistent webview data after removing Crosswalk from your app.",
