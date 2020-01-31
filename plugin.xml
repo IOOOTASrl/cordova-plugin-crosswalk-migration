@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-crosswalk-data-migration"
-    version="1.0.0">
+    id="@salesfusion/cordova-plugin-crosswalk-migration"
+    version="1.0.1">
 
     <name>Crosswalk Data Migration Plugin</name>
     <description>Cordova/Phonegap plugin for Android to preserve persistent webview data after removing Crosswalk from your app.</description>
@@ -12,8 +12,8 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    <repo>https://github.com/dpa99c/cordova-plugin-crosswalk-data-migration.git</repo>
-    <issue>https://github.com/dpa99c/cordova-plugin-crosswalk-data-migration/issues</issue>
+    <repo>https://github.com/salesfusion-dev/cordova-plugin-crosswalk-migration.git</repo>
+    <issue>https://github.com/salesfusion-dev/cordova-plugin-crosswalk-migration/issues</issue>
 
 
     <!-- android -->
