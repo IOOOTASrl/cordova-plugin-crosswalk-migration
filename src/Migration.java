@@ -62,9 +62,9 @@ public class Migration extends CordovaPlugin {
         try {
           Class.forName("org.crosswalk.engine.XWalkCordovaView");
           Log.d(TAG, "initialize::crosswalk_enabled");
+          return;
         } catch (ClassNotFoundException e) {
           Log.d(TAG, "initialize::crosswalk_not_found");
-          return;
         }
 
         if(!hasRun){
