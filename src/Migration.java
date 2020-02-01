@@ -163,13 +163,9 @@ public class Migration extends CordovaPlugin {
     }
 
     private void restartCordova(){
-        Log.d(TAG, "restarting Cordova activity");
-
-      this.activity.runOnUiThread(new Runnable() {
-        public void run() {
-          activity.recreate();
-        }
-      });
+        Log.d(TAG, "killing Cordova activity");
+        activity.finishAffinity();
+        System.exit(0);
     }
 
     private boolean testFileExists(File root, String name) {
