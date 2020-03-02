@@ -1,19 +1,22 @@
 package cordova.plugins.crosswalk;
 
-/*
- * Imports
- */
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.ComponentName;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 
 import java.io.File;
+
 
 public class Migration extends CordovaPlugin {
 
@@ -47,6 +50,9 @@ public class Migration extends CordovaPlugin {
     private Activity activity;
     private Context context;
 
+    private String alertTitle;
+    private String alertMessage;
+
     private boolean isModernAndroid;
     private File appRoot;
     private File XWalkRoot;
@@ -56,15 +62,18 @@ public class Migration extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        alertTitle = webView.getPreferences().getString("XwalkMigration.alertTitle", "App");
+        alertMessage = webView.getPreferences().getString("XwalkMigration.alertMessage", "Application data updated. Press OK to restart.");
+
         Log.d(TAG, "initialize()");
-        
+
         // Crosswalk sanity check
         try {
-          Class.forName("org.crosswalk.engine.XWalkCordovaView");
-          Log.d(TAG, "initialize::crosswalk_enabled");
-          return;
+            Class.forName("org.crosswalk.engine.XWalkCordovaView");
+            Log.d(TAG, "initialize::crosswalk_enabled");
+            return;
         } catch (ClassNotFoundException e) {
-          Log.d(TAG, "initialize::crosswalk_not_found");
+            Log.d(TAG, "initialize::crosswalk_not_found");
         }
 
         if(!hasRun){
@@ -80,6 +89,7 @@ public class Migration extends CordovaPlugin {
 
     private void run(){
         Log.d(TAG, "running Crosswalk migration shim");
+
 
         boolean found = lookForXwalk(context.getFilesDir());
         if(!found){
@@ -163,10 +173,29 @@ public class Migration extends CordovaPlugin {
     }
 
     private void restartCordova(){
-        Log.d(TAG, "killing Cordova activity");
-        activity.finishAffinity();
-        System.exit(0);
+        Builder dlg = new AlertDialog.Builder(cordova.getActivity());
+        dlg.setCancelable(false);
+        dlg.setTitle(alertTitle);
+        dlg.setMessage(alertMessage);
+        dlg.setPositiveButton( "OK", new AlertDialog.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                triggerRebirth(cordova.getActivity().getApplicationContext());
+                dialog.dismiss();
+            }
+        });
+        dlg.create();
+        AlertDialog dialog =  dlg.show();
     }
+
+    private static void triggerRebirth(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+        ComponentName componentName = intent.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+        context.startActivity(mainIntent);
+        Runtime.getRuntime().exit(0);
+    }
+
 
     private boolean testFileExists(File root, String name) {
         boolean status = false;
@@ -211,3 +240,4 @@ public class Migration extends CordovaPlugin {
         fileOrDirectory.delete();
     }
 }
+

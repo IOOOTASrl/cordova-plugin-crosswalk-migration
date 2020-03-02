@@ -1,17 +1,19 @@
 {
-    "version": "1.0.3",
-    "name": "@salesfusion/cordova-plugin-crosswalk-migration",
+    "version": "1.0.5",
+    "name": "@iooota_srl/cordova-plugin-crosswalk-migration",
     "cordova_name": "Crosswalk Data Migration Plugin",
     "description": "Cordova/Phonegap plugin for Android to preserve persistent webview data after removing Crosswalk from your app.",
     "author": "Dave Alden",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/salesfusion-dev/cordova-plugin-crosswalk-migration.git"
+        "url": "git+https://github.com/IOOOTASrl/cordova-plugin-crosswalk-migration.git"
     },
-    "issue": "https://github.com/salesfusion-dev/cordova-plugin-crosswalk-migration/issues",
+    "issue": {
+        "url": "https://github.com/IOOOTASrl/cordova-plugin-crosswalk-migration/issues"
+    },
     "cordova": {
-        "id": "@salesfusion/cordova-plugin-crosswalk-migration",
+        "id": "@iooota_srl/cordova-plugin-crosswalk-migration",
         "platforms": [
             "android"
         ]
@@ -21,5 +23,6 @@
         "cordova",
         "android",
         "crosswalk"
-    ]
+    ],
+    "homepage": "https://github.com/IOOOTASrl/cordova-plugin-crosswalk-migration#readme"
 }
